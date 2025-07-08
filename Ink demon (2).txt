@@ -1,0 +1,190 @@
+------------ credits 1
+game.StarterGui:SetCore("SendNotification", {
+Title = "Credits and stufff";
+Text = "Made by the neo'st, check console for more info";
+Duration = 5;
+Icon = "rbxassetid://0"; -- leave it like that if you don't want the icon
+Button1 = "Okay"; -- name of it
+Button2 = "Close"; -- remove this line if you only want 1 button
+})
+-- remove this script at bottom if you don't wan tsb notification sound
+s= Instance.new("Sound")
+s.SoundId = "rbxassetid://10066921516"
+s:Play()
+s.Volume = 3
+--- credits 2 ---
+print("Ink demon Script note: This script actually has lore, it's about someone getting himself infected against the script virus. it corrupts the player's Roblox. but it stumbled upon the player's exploit. then... the other is history.")
+print("Made by.. the neo'st/known as AliceHub, yes I changed my name because everyone thinked I was a girl.. duh.")
+print("enjoy the script c:,")
+print(" credits for noli for contributing alot of stuff")
+---
+--- gui trash talk lol
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Themindofneo/Kj/refs/heads/main/Gui%20is%20Alice%20lol.txt"))()
+-------------
+-- text spawn
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local hrp = character:WaitForChild("HumanoidRootPart")
+
+-- BillboardGui setup
+local billboard = Instance.new("BillboardGui")
+billboard.Size = UDim2.new(0, 200, 0, 60)
+billboard.StudsOffset = Vector3.new(2, 3, 0)
+billboard.AlwaysOnTop = true
+billboard.Adornee = hrp
+billboard.Name = "GlitchText"
+billboard.Parent = player:WaitForChild("PlayerGui")
+
+-- TextLabel setup
+local textLabel = Instance.new("TextLabel")
+textLabel.Size = UDim2.new(1, 0, 1, 0)
+textLabel.BackgroundTransparency = 1
+textLabel.TextColor3 = Color3.new(0, 0, 0)
+textLabel.TextStrokeTransparency = 0
+textLabel.TextStrokeColor3 = Color3.new(1, 0, 0)
+textLabel.Font = Enum.Font.SciFi -- closest to a foreign/stylized Japanese feel
+textLabel.TextScaled = true
+textLabel.Text = "Test"
+textLabel.Parent = billboard
+
+-- Glitchy flicker loop
+local running = true
+local glitchTexts = {
+	"1110101010101010101", "T̶͚͛̈́e̷̙̋̍s̶̘̅t̴̚", "TΞST", "N̺̻̔̆ͅḚͭ̉̇͟O̖̼ͩ͌͐", "█TΞS▌", "T̺͆H̺͆E̺͆ W̺͆O̺͆R̺͆L̺͆D̺͆ I̺͆S̺͆ M̺͆I̺͆N̺͆E̺͆", "I OWN AND DEVOUR.", "THE WORLD IS BOUND TO ME", "there's a time I ruled the world.", "And so on.", "I'M NOT A WASTE, I'LL SHOW YOU.", "And Yet. I feel nothing.", "Yet, I'm still defeated", "never.", "NEVER", "corruption 10%", "HAHAHAHAHAHAAHAHA!!!", "TWO CAN PLAY THE SAME GAME!", "everyone is so.. cursed. they're complicated, it's time to make a new.", "the only guidance is EXPLOIT", "!!!!!!!", "Game.Players.LocalPlayer", "almost.. had it all.", "I'm an entity, that will never. be patched.", "40%!!!", "I'm not a weapon.", "I'M ONLY A WEAPON.", "I don't particularly like anything.", "I don't like anything."
+}
+
+task.spawn(function()
+	local start = tick()
+	while tick() - start < 4 do
+		-- Random screen shake
+		local offset = Vector2.new(math.random(-4, 4), math.random(-4, 4))
+		textLabel.Position = UDim2.new(0, offset.X, 0, offset.Y)
+
+		-- Glitch color flicker
+		if math.random() < 0.5 then
+			textLabel.TextColor3 = Color3.new(1, 0, 0) -- red
+			textLabel.TextStrokeColor3 = Color3.new(0, 0, 0)
+		else
+			textLabel.TextColor3 = Color3.new(0, 0, 0) -- black
+			textLabel.TextStrokeColor3 = Color3.new(1, 0, 0)
+		end
+
+		-- Glitch text swap
+		if math.random() < 0.6 then
+			textLabel.Text = glitchTexts[math.random(1, #glitchTexts)]
+		else
+			textLabel.Text = "YOU'RE MINE."
+		end
+
+		task.wait(0.001)
+	end
+
+	-- Fade out
+	local tween = TweenService:Create(textLabel, TweenInfo.new(3), {
+		TextTransparency = 1,
+		TextStrokeTransparency = 1
+	})
+	tween:Play()
+	tween.Completed:Wait()
+	billboard:Destroy()
+end)
+------------------------------[[ ability logic and tools ]]-----------------------------
+---------------------------------------------------------------------------------------------------
+--// [[ Ink Spike Puddle Tool Script ]] \\--
+repeat task.wait() until game:IsLoaded()
+-- Services
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local HttpService = game:GetService("HttpService")
+-- Player & Character
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+-- Update character and humanoid references
+player.CharacterAdded:Connect(function(char)
+	character = char
+	humanoid = char:WaitForChild("Humanoid")
+end)
+-- Ability State
+local active = false
+local cooldownTime = 6
+local lastUsedTime = 0
+-- Ability logic
+local function useInkSpike()
+	if active then return end
+	local now = tick()
+	if now - lastUsedTime < cooldownTime then return end
+	lastUsedTime = now
+	active = true
+	-- Load external script safely
+	task.spawn(function()
+		local success, result = pcall(function()
+			local code = game:HttpGet("https://raw.githubusercontent.com/Themindofneo/Kj/main/Ink%20spike%20puddle%20.txt")
+			loadstring(code)()
+		end)
+		if not success then
+			warn("Failed to execute Ink Spike script:", result)
+		end
+	end)
+	-- Reset active state after delay
+	task.delay(3, function()
+		active = false
+	end)
+end
+-- Tool Setup
+local tool = Instance.new("Tool")
+tool.Name = "ink spike puddle"
+tool.RequiresHandle = false
+tool.CanBeDropped = false
+tool.Parent = player:WaitForChild("Backpack")
+-- Activation Handler
+tool.Equipped:Connect(function()
+	useInkSpike()
+	-- Unequip immediately
+	RunService.RenderStepped:Wait()
+	tool.Parent = player.Backpack
+end)
+--- [[ special tools ]] ---
+repeat task.wait() until game:IsLoaded()
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+player.CharacterAdded:Connect(function(char)
+	character = char
+	humanoid = char:WaitForChild("Humanoid")
+end)
+local active_move = nil
+local cooldown = 6
+local lastUsed = 0
+local function activate_reverse_blue()
+	if active_move then return end
+	local now = tick()
+	if now - lastUsed < cooldown then return end
+	lastUsed = now
+	active_move = "Reverse Blue"
+	local success, err = pcall(function()	loadstring(game:HttpGet("https://raw.githubusercontent.com/Themindofneo/Kj/refs/heads/main/Spike%20summon%20full%20.txt"))()
+	end)
+	if not success then
+		warn("Failed to load ability script:", err)
+	end
+	task.delay(3, function()
+		active_move = nil
+	end)
+end
+local reverse_tool = Instance.new("Tool")
+reverse_tool.Name = "Solid Darkness Spike"
+reverse_tool.RequiresHandle = false
+reverse_tool.Parent = player:WaitForChild("Backpack")
+reverse_tool.Equipped:Connect(function()
+	task.spawn(activate_reverse_blue)
+	RunService.RenderStepped:Wait()
+	reverse_tool.Parent = player.Backpack
+end)
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------[ ink function walk, idle, jump, idle2]--------------------------
+---------------------------------------[[ tools basic ]]---------------------------------------
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Themindofneo/Kj/refs/heads/main/Ink%20demon%20v3.txt"))()
